@@ -161,7 +161,7 @@ export class TreeService {
     });
     game$ = this.gameSource.asObservable();
 
-    cells = 5;
+    cells = 8;
 
     // Tree
     tree = null
@@ -201,7 +201,7 @@ export class TreeService {
             console.time('Find a move');
             const boardGame = findBoardInTree(this.tree, board).pop();
             const outcomes = gamesFromBoard(boardGame);
-            const winningBranch = chooseBranch(outcomes, 'cross');
+            const winningBranch = chooseBranch(outcomes, 'naught');
             console.timeEnd('Find a move');
 
             this.gameSource.next({

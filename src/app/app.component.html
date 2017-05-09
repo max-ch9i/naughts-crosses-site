@@ -5,9 +5,10 @@
     <div>
         <ul class="nc-board">
             <ng-template ngFor let-i="index" let-cell [ngForOf]="board">
-                <li (click)="move(i, cell)" 
+                <li (click)="move(i, cell)"
                     [ngClass]="['nc-board__cell', cell === null ? 'free' : cell]"></li>
             </ng-template>
         </ul>
     </div>
+    <h2 *ngIf="winner !== null">And the winner is: {{winner}}</h2>
 </section>

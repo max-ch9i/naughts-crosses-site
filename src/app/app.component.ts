@@ -10,10 +10,12 @@ export class AppComponent implements OnInit {
   title = 'Naughts and crosses';
   board = [];
   goes = 'cross';
+  winner = null;
   constructor(private treeService: TreeService) {
       treeService.game$.subscribe(game => {
         this.board = game.board;
         this.goes = game.goes;
+        this.winner = game.winner;
       });
   }
   ngOnInit() {

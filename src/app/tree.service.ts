@@ -196,26 +196,32 @@ export class TreeService {
         });
 
         const _winner = checkWinner(board);
-
-        if (_winner === null) {
-            console.time('Find a move');
-            const boardGame = findBoardInTree(this.tree, board).pop();
-            const outcomes = gamesFromBoard(boardGame);
-            const winningBranch = chooseBranch(outcomes, 'naught');
-            console.timeEnd('Find a move');
-
-            this.gameSource.next({
-                board: winningBranch.node.board,
-                goes,
-                winner
-            });
-        } else {
+        if (_winner !== null) {
             this.winner = _winner;
             this.gameSource.next({
                 board,
                 goes,
                 winner: this.winner
             });
+            setTimeout(_ => {
+                this.startGame();
+            }, 4000);
+            return;
+        }
+
+        console.time('Find a move');
+        const boardGame = findBoardInTree(this.tree, board).pop();
+        const outcomes = gamesFromBoard(boardGame);
+        const winningBranch = chooseBranch(outcomes, 'naught');
+        console.timeEnd('Find a move');
+
+        const _winnerAfterAI = checkWinner(winningBranch.node.board);
+        this.gameSource.next({
+            board: winningBranch.node.board,
+            goes,
+            winner: _winnerAfterAI
+        });
+        if (_winnerAfterAI !== null) {
             setTimeout(_ => {
                 this.startGame();
             }, 4000);

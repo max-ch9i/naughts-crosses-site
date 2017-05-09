@@ -1,3 +1,13 @@
-<h1>
-  {{title}}
-</h1>
+<section [ngClass]="['nc-game', goes]">
+    <h1>
+      {{title}}
+    </h1>
+    <div>
+        <ul class="nc-board">
+            <ng-template ngFor let-i="index" let-cell [ngForOf]="board">
+                <li (click)="move(i, cell)" 
+                    [ngClass]="['nc-board__cell', cell === null ? 'free' : cell]"></li>
+            </ng-template>
+        </ul>
+    </div>
+</section>
